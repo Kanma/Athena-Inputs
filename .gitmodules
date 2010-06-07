@@ -7,3 +7,6 @@
 [submodule "dependencies/Athena-Core"]
 	path = dependencies/Athena-Core
 	url = git://github.com/Kanma/Athena-Core.git
+[submodule "dependencies/UnitTest++"]
+	path = dependencies/UnitTest++
+	url = git://github.com/Kanma/Athena-Dependencies-UnitTest-cpp.git
