@@ -6,6 +6,7 @@ set(SRCS Controller.cpp
 
 if (APPLE)
     set(PLATFORM_SRCS osx/MacController.cpp
+                      osx/MacMouse.cpp
     )
 endif()
 
@@ -20,7 +21,7 @@ if (NOT ATHENA_INPUTS_STATIC)
     add_library(Athena-Inputs SHARED ${SRCS} ${PLATFORM_SRCS})
     xmake_target_link_libraries(Athena-Inputs ATHENA_INPUTS)
 
-    set_target_properties(Athena-Inputs PROPERTIES LINK_FLAGS "-framework IOKit -framework CoreFoundation")
+    set_target_properties(Athena-Inputs PROPERTIES LINK_FLAGS "-framework IOKit -framework CoreFoundation -framework Carbon")
 
     # Set the INSTALL_PATH so that the dynamic library can be local
     set_target_properties(Athena-Inputs PROPERTIES BUILD_WITH_INSTALL_RPATH ON
