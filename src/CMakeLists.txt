@@ -1,5 +1,7 @@
 # List the source files
 set(SRCS Controller.cpp
+         InputsUnit.cpp
+         VirtualController.cpp
 )
 
 # Precompiler definitions

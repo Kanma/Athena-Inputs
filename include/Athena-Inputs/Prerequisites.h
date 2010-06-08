@@ -24,8 +24,11 @@ namespace Athena
     {
         class Controller;
         class InputsUnit;
+        class VirtualController;
 
+        class IControllerManager;
         class IEventsListener;
+        class IVirtualEventsListener;
     }
 }
 
