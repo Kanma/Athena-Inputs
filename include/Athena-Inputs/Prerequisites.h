@@ -29,6 +29,12 @@ namespace Athena
         class IControllerManager;
         class IEventsListener;
         class IVirtualEventsListener;
+
+#if ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32
+
+#elif ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
+        class MacController;
+#endif
     }
 }
 

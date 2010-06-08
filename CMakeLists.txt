@@ -37,6 +37,10 @@ else()
     xmake_add_link_targets(ATHENA_INPUTS Athena-Inputs "${XMAKE_ATHENA_CORE_LINK_TARGETS}")
 endif()
 
+if (APPLE)
+    xmake_add_link_flags(ATHENA_INPUTS "-framework IOKit" "-framework CoreFoundation")
+endif()
+
 xmake_add_include_paths(ATHENA_INPUTS ${ATHENA_INPUTS_SOURCE_DIR}/include
                                       ${XMAKE_ATHENA_CORE_INCLUDE_PATHS})
 

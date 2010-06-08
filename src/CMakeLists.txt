@@ -4,6 +4,11 @@ set(SRCS Controller.cpp
          VirtualController.cpp
 )
 
+if (APPLE)
+    set(PLATFORM_SRCS osx/MacController.cpp
+    )
+endif()
+
 # Precompiler definitions
 add_definitions(-DATHENA_EXPORTS)
 
@@ -12,12 +17,14 @@ xmake_include_directories(ATHENA_INPUTS)
 
 # Declaration of the library
 if (NOT ATHENA_INPUTS_STATIC)
-    add_library(Athena-Inputs SHARED ${SRCS})
+    add_library(Athena-Inputs SHARED ${SRCS} ${PLATFORM_SRCS})
     xmake_target_link_libraries(Athena-Inputs ATHENA_INPUTS)
+
+    set_target_properties(Athena-Inputs PROPERTIES LINK_FLAGS "-framework IOKit -framework CoreFoundation")
 
     # Set the INSTALL_PATH so that the dynamic library can be local
     set_target_properties(Athena-Inputs PROPERTIES BUILD_WITH_INSTALL_RPATH ON
-                                                     INSTALL_NAME_DIR "@rpath"
+                                                   INSTALL_NAME_DIR "@rpath"
     )
 
 else()
