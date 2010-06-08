@@ -22,7 +22,7 @@ xmake_include_directories(ATHENA_INPUTS)
 # Declaration of the library
 if (NOT ATHENA_INPUTS_STATIC)
     add_library(Athena-Inputs SHARED ${SRCS} ${PLATFORM_SRCS})
-    xmake_target_link_libraries(Athena-Inputs ATHENA_INPUTS)
+    xmake_target_link_libraries(Athena-Inputs ATHENA_CORE)
 
     set_target_properties(Athena-Inputs PROPERTIES LINK_FLAGS "-framework IOKit -framework CoreFoundation -framework Carbon")
 
