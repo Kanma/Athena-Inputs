@@ -32,5 +32,5 @@ if (NOT ATHENA_INPUTS_STATIC)
     )
 
 else()
-    add_library(Athena-Inputs STATIC ${SRCS})
+    add_library(Athena-Inputs STATIC ${SRCS} ${PLATFORM_SRCS})
 endif()
