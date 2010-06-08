@@ -34,6 +34,7 @@ namespace Athena
 
 #elif ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
         class MacController;
+        class MacGamepad;
         class MacKeyboard;
         class MacMouse;
 #endif
