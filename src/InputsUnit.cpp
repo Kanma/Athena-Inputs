@@ -10,11 +10,11 @@
 // #include <tinyxml.h>
 #include <sstream>
 
-// #if ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32
-//     #include <Athena-Inputs/win32/DI8ControllerManager.h>
-// #elif ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
-//     #include <Athena-Inputs/osx/MacControllerManager.h>
-// #endif
+#if ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32
+    #include <Athena-Inputs/win32/DI8ControllerManager.h>
+#elif ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
+    #include <Athena-Inputs/osx/MacControllerManager.h>
+#endif
 
 using namespace Athena;
 using namespace Athena::Inputs;
@@ -43,13 +43,13 @@ InputsUnit::InputsUnit()
 
 	ATHENA_LOG_EVENT("Creation");
 
-// #if ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32
-//     m_pControllerManager = new DI8ControllerManager();
-// #elif ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
-//     m_pControllerManager = new MacControllerManager();
-// #else
-//     #error Unsupported platform
-// #endif
+#if ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32
+    m_pControllerManager = new DI8ControllerManager();
+#elif ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
+    m_pControllerManager = new MacControllerManager();
+#else
+    #error Unsupported platform
+#endif
 }
 
 //-----------------------------------------------------------------------

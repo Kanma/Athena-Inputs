@@ -6,6 +6,7 @@ set(SRCS Controller.cpp
 
 if (APPLE)
     set(PLATFORM_SRCS osx/MacController.cpp
+                      osx/MacControllerManager.cpp
                       osx/MacGamepad.cpp
                       osx/MacKeyboard.cpp
                       osx/MacMouse.cpp
