@@ -39,8 +39,6 @@ template<> InputsUnit* Utils::Singleton<InputsUnit>::ms_Singleton = 0;
 InputsUnit::InputsUnit()
 : m_pControllerManager(0), m_uiNbGamepads(0)
 {
-	assert(!ms_Singleton && "There's already an instance of the Inputs' unit");
-
 	ATHENA_LOG_EVENT("Creation");
 
 #if ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32
