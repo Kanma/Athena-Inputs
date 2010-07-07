@@ -46,7 +46,8 @@ InputsUnit::InputsUnit()
 #elif ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
     m_pControllerManager = new MacControllerManager();
 #else
-    #error Unsupported platform
+    #warning Athena-Inputs is not yet supported on this platform, no controller will be available
+	ATHENA_LOG_WARNING("Athena-Inputs isn't yet supported on this platform, no controller will be available");
 #endif
 }
 
@@ -102,11 +103,9 @@ InputsUnit& InputsUnit::getSingleton()
 
 bool InputsUnit::init(void* mainWindowHandle)
 {
-	assert(m_pControllerManager && "There isn't an instance of the Controllers manager");
-
 	ATHENA_LOG_EVENT("Initialization");
 
-	if (!m_pControllerManager->init(mainWindowHandle))
+	if (!m_pControllerManager || !m_pControllerManager->init(mainWindowHandle))
 	{
 		ATHENA_LOG_ERROR("Failed to initialize");
 		return false;
