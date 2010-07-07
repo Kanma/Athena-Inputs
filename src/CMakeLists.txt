@@ -24,8 +24,10 @@ if (NOT ATHENA_INPUTS_STATIC)
     add_library(Athena-Inputs SHARED ${SRCS} ${PLATFORM_SRCS})
     xmake_target_link_libraries(Athena-Inputs ATHENA_CORE)
 
-    set_target_properties(Athena-Inputs PROPERTIES LINK_FLAGS "-framework IOKit -framework CoreFoundation -framework Carbon")
-
+    if (APPLE)
+        set_target_properties(Athena-Inputs PROPERTIES LINK_FLAGS "-framework IOKit -framework CoreFoundation -framework Carbon")
+    endif()
+    
     # Set the INSTALL_PATH so that the dynamic library can be local
     set_target_properties(Athena-Inputs PROPERTIES BUILD_WITH_INSTALL_RPATH ON
                                                    INSTALL_NAME_DIR "@rpath"
