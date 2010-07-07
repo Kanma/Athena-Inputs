@@ -11,17 +11,43 @@ if (NOT DEFINED ATHENA_INPUTS_STATIC)
 endif()
 
 # Set the output paths
-if (NOT ATHENA_BINARY_DIR)
+if (NOT DEFINED ATHENA_BINARY_DIR)
     set(ATHENA_BINARY_DIR "${ATHENA_INPUTS_BINARY_DIR}")
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${ATHENA_INPUTS_BINARY_DIR}/bin")
     set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${ATHENA_INPUTS_BINARY_DIR}/lib")
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${ATHENA_INPUTS_BINARY_DIR}/bin")
 endif()
 
-# Import XMake
-if (EXISTS "${ATHENA_INPUTS_SOURCE_DIR}/dependencies/xmake/XMake.cmake")
-    include("${ATHENA_INPUTS_SOURCE_DIR}/dependencies/xmake/XMake.cmake")
+# Set the dependencies path
+if (NOT DEFINED ATHENA_DEPENDENCIES_DIR)
+    set(ATHENA_DEPENDENCIES_DIR "${ATHENA_INPUTS_SOURCE_DIR}/dependencies")
 endif()
+
+# Setup the dependencies
+if (NOT DEFINED ATHENA_MATH_STATIC)
+    set(ATHENA_MATH_STATIC ON)
+endif()
+
+if (NOT DEFINED ATHENA_CORE_STATIC)
+    set(ATHENA_CORE_STATIC ON)
+endif()
+
+# Import XMake
+if (NOT EXISTS "${ATHENA_DEPENDENCIES_DIR}/xmake/XMake.cmake")
+    message(FATAL_ERROR
+"Missing dependency: XMake
+Athena-Inputs requires the following dependencies:
+   - XMake
+   - Athena-Math
+   - Athena-Core
+   - UnitTest++
+They are provided as GIT submodules of this repository.
+Did you forgot to execute the following commands?
+   git submodule init
+   git submodule update")
+endif()
+
+include("${ATHENA_DEPENDENCIES_DIR}/xmake/XMake.cmake")
 
 # Process the dependencies
 add_subdirectory(dependencies)
