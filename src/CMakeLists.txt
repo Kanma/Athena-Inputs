@@ -13,30 +13,35 @@ if (APPLE)
     )
 endif()
 
-# Precompiler definitions
-add_definitions(-DATHENA_EXPORTS)
 
 # List the include paths
-xmake_include_directories(ATHENA_INPUTS)
+set(INCLUDE_PATHS "${ATHENA_INPUTS_SOURCE_DIR}/include"
+                  "${XMAKE_BINARY_DIR}/include")
+
+include_directories(${INCLUDE_PATHS})
+
+xmake_import_search_paths(ATHENA_CORE)
+
 
 # Declaration of the library
 if (NOT ATHENA_INPUTS_STATIC)
-    add_library(Athena-Inputs SHARED ${SRCS} ${PLATFORM_SRCS})
-    xmake_target_link_libraries(Athena-Inputs ATHENA_CORE)
+    xmake_create_dynamic_library(ATHENA_INPUTS Athena-Inputs 0.1.0 0.1.0 ${SRCS} ${PLATFORM_SRCS})
 
     if (APPLE)
-        set_target_properties(Athena-Inputs PROPERTIES LINK_FLAGS "-framework IOKit -framework CoreFoundation -framework Carbon")
+        xmake_add_to_property(ATHENA_INPUTS LINK_FLAGS "-framework IOKit -framework CoreFoundation -framework Carbon")
     endif()
-    
-    # Set the INSTALL_PATH so that the dynamic library can be local
-    set_target_properties(Athena-Inputs PROPERTIES BUILD_WITH_INSTALL_RPATH ON
-                                                   INSTALL_NAME_DIR "@rpath"
-    )
-
 else()
-    add_library(Athena-Inputs STATIC ${SRCS} ${PLATFORM_SRCS})
+    xmake_create_static_library(ATHENA_INPUTS Athena-Inputs ${SRCS} ${PLATFORM_SRCS})
+endif()
 
-    if (NOT WIN32)
-        set_target_properties(Athena-Inputs PROPERTIES COMPILE_FLAGS "-fPIC")
-    endif()
+xmake_project_link(ATHENA_INPUTS ATHENA_CORE)
+
+xmake_add_to_list_property(ATHENA_INPUTS COMPILE_DEFINITIONS "ATHENA_EXPORTS")
+
+
+# Exportations
+xmake_export_include_paths(ATHENA_INPUTS ${INCLUDE_PATHS})
+
+if (APPLE AND ATHENA_INPUTS_STATIC)
+    xmake_export_link_flags(ATHENA_INPUTS "-framework IOKit -framework CoreFoundation -framework Carbon")
 endif()
