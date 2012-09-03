@@ -25,23 +25,26 @@ xmake_import_search_paths(ATHENA_CORE)
 
 # Declaration of the library
 if (NOT ATHENA_INPUTS_STATIC)
-    xmake_create_dynamic_library(ATHENA_INPUTS Athena-Inputs 0.1.0 0.1.0 ${SRCS} ${PLATFORM_SRCS})
+    xmake_create_dynamic_library(ATHENA_INPUTS Athena-Inputs
+                                 "${ATHENA_INPUTS_VERSION_MAJOR}.${ATHENA_INPUTS_VERSION_MINOR}.${ATHENA_INPUTS_VERSION_PATCH}"
+                                 "${ATHENA_INPUTS_VERSION_MAJOR}.${ATHENA_INPUTS_VERSION_MINOR}.${ATHENA_INPUTS_VERSION_PATCH}"
+                                 ${SRCS} ${PLATFORM_SRCS})
+
+    xmake_add_to_list_property(ATHENA_INPUTS COMPILE_DEFINITIONS "ATHENA_INPUTS_EXPORTS")
 
     if (APPLE)
         xmake_add_to_property(ATHENA_INPUTS LINK_FLAGS "-framework IOKit -framework CoreFoundation -framework Carbon")
     endif()
 else()
     xmake_create_static_library(ATHENA_INPUTS Athena-Inputs ${SRCS} ${PLATFORM_SRCS})
+
+    if (APPLE)
+        xmake_export_link_flags(ATHENA_INPUTS "-framework IOKit -framework CoreFoundation -framework Carbon")
+    endif()
 endif()
 
 xmake_project_link(ATHENA_INPUTS ATHENA_CORE)
 
-xmake_add_to_list_property(ATHENA_INPUTS COMPILE_DEFINITIONS "ATHENA_EXPORTS")
-
 
 # Exportations
 xmake_export_include_paths(ATHENA_INPUTS ${INCLUDE_PATHS})
-
-if (APPLE AND ATHENA_INPUTS_STATIC)
-    xmake_export_link_flags(ATHENA_INPUTS "-framework IOKit -framework CoreFoundation -framework Carbon")
-endif()

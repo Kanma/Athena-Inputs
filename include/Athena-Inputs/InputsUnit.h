@@ -47,7 +47,7 @@ namespace Inputs {
 ///
 /// This class is a singleton.
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL InputsUnit: public Utils::Singleton<InputsUnit>, public IEventsListener
+class ATHENA_INPUTS_SYMBOL InputsUnit: public Utils::Singleton<InputsUnit>, public IEventsListener
 {
 	//_____ Construction / Destruction __________
 public:

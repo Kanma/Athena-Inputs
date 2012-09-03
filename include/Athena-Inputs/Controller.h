@@ -28,7 +28,7 @@ namespace Inputs {
 /// A controller can be activated and deactivated, in which case its inputs will
 /// not be read.
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Controller
+class ATHENA_INPUTS_SYMBOL Controller
 {
 	//_____ Construction / Destruction __________
 public:

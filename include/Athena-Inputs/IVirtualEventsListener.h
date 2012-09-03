@@ -17,7 +17,7 @@ namespace Inputs {
 //---------------------------------------------------------------------------------------
 /// @brief	Represents an event's listener for a virtual controller
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL IVirtualEventsListener
+class ATHENA_INPUTS_SYMBOL IVirtualEventsListener
 {
 	//_____ Construction / Destruction __________
 public:

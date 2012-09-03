@@ -31,7 +31,7 @@ namespace Inputs {
 ///
 /// A virtual controller can be enabled and disabled.
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL VirtualController
+class ATHENA_INPUTS_SYMBOL VirtualController
 {
 	friend class InputsUnit;
 

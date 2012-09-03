@@ -19,7 +19,7 @@ namespace Inputs {
 /// A Controller Manager is responsible to detect all the controllers connected to the
 /// computer, and to tell the Inputs Unit about them by calling InputsUnit::_addController().
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL IControllerManager
+class ATHENA_INPUTS_SYMBOL IControllerManager
 {
 	//_____ Construction / Destruction __________
 public:
