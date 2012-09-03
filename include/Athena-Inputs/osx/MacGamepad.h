@@ -1,7 +1,7 @@
-/** @file	MacGamepad.h
-	@author	Philip Abbet
- 
-	Declaration of the class 'Athena::Inputs::MacGamepad'
+/** @file   MacGamepad.h
+    @author Philip Abbet
+
+    Declaration of the class 'Athena::Inputs::MacGamepad'
 */
 
 #ifndef _ATHENA_INPUTS_MACGAMEPAD_H_
@@ -19,42 +19,42 @@ namespace Inputs {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	Represents a gamepad on MacOS X
+/// @brief  Represents a gamepad on MacOS X
 //---------------------------------------------------------------------------------------
 class MacGamepad: public MacController
 {
-	//_____ Construction / Destruction __________
+    //_____ Construction / Destruction __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Constructor
+    /// @brief  Constructor
     ///
-    /// @param	hidDevice	HID device
+    /// @param  hidDevice   HID device
     //-----------------------------------------------------------------------------------
-	MacGamepad(io_object_t hidDevice, unsigned int uiNo = 1);
+    MacGamepad(io_object_t hidDevice, unsigned int uiNo = 1);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
+    /// @brief  Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~MacGamepad();
-	
-	
-	//_____ Management of the gamepad __________
+    virtual ~MacGamepad();
+
+
+    //_____ Management of the gamepad __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Read the state of the gamepad's keys and axes
-    /// 
+    /// @brief  Read the state of the gamepad's keys and axes
+    ///
     /// @return 'true' if successful
     //-----------------------------------------------------------------------------------
-	virtual bool readInputs();
+    virtual bool readInputs();
 
 protected:
-	virtual bool acquire(bool bAcquire = true);
+    virtual bool acquire(bool bAcquire = true);
 
 
-	//_____ Attributes __________
+    //_____ Attributes __________
 protected:
-	IOHIDDeviceInterface**	m_ppHidDeviceInterface;
-	IOHIDQueueInterface**	m_ppQueue;
+    IOHIDDeviceInterface**  m_ppHidDeviceInterface;
+    IOHIDQueueInterface**   m_ppQueue;
 };
 
 }

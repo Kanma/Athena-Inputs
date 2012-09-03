@@ -1,6 +1,6 @@
 /** @file   Prerequisites.h
     @author Philip Abbet
-    
+
     Declaration of the types of the Athena-Inputs module
 */
 
@@ -11,15 +11,27 @@
 #include <Athena-Inputs/Config.h>
 
 
+/// Used to export symbols from the library
+#if (ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32) && !ATHENA_INPUTS_STATIC
+#    ifdef ATHENA_INPUTS_EXPORTS
+#        define ATHENA_INPUTS_SYMBOL   __declspec(dllexport)
+#    else
+#        define ATHENA_INPUTS_SYMBOL   __declspec(dllimport)
+#    endif
+#else
+#    define ATHENA_INPUTS_SYMBOL
+#endif
+
+
 //----------------------------------------------------------------------------------------
-/// @brief	Main namespace. All the components of the Athena engine belongs to this
-///			namespace
+/// @brief  Main namespace. All the components of the Athena engine belongs to this
+///         namespace
 //----------------------------------------------------------------------------------------
 namespace Athena
 {
-	//------------------------------------------------------------------------------------
-	/// @brief	Contains all the inputs-related classes
-	//------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------
+    /// @brief  Contains all the inputs-related classes
+    //------------------------------------------------------------------------------------
     namespace Inputs
     {
         class Controller;
