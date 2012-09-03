@@ -24,14 +24,14 @@
 
 
 //----------------------------------------------------------------------------------------
-/// @brief	Main namespace. All the components of the Athena engine belongs to this
-///			namespace
+/// @brief  Main namespace. All the components of the Athena engine belongs to this
+///         namespace
 //----------------------------------------------------------------------------------------
 namespace Athena
 {
-	//------------------------------------------------------------------------------------
-	/// @brief	Contains all the inputs-related classes
-	//------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------
+    /// @brief  Contains all the inputs-related classes
+    //------------------------------------------------------------------------------------
     namespace Inputs
     {
         class Controller;

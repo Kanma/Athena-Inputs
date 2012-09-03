@@ -1,7 +1,7 @@
-/**	@file	Controller.cpp
-	@author	Philip Abbet
+/** @file   Controller.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Inputs::Controller'
+    Implementation of the class 'Athena::Inputs::Controller'
 */
 
 #include <Athena-Inputs/Controller.h>
@@ -33,106 +33,106 @@ Controller::~Controller()
 
 const string Controller::toString() const
 {
-	switch (m_type)
-	{
-	case CONTROLLER_KEYBOARD:
-		return "Keyboard";
+    switch (m_type)
+    {
+    case CONTROLLER_KEYBOARD:
+        return "Keyboard";
 
-	case CONTROLLER_MOUSE:
-		return  "Mouse";
+    case CONTROLLER_MOUSE:
+        return  "Mouse";
 
-	case CONTROLLER_GAMEPAD:
-		return "Gamepad #" + StringConverter::toString(m_uiIndex);
+    case CONTROLLER_GAMEPAD:
+        return "Gamepad #" + StringConverter::toString(m_uiIndex);
 
-	default:
-		return "Unknown #" + StringConverter::toString(m_uiIndex);
-	}
+    default:
+        return "Unknown #" + StringConverter::toString(m_uiIndex);
+    }
 }
 
 //-----------------------------------------------------------------------
 
 const string Controller::getNameOfKey(tKey key)
 {
-	// Declarations
-	tKeyNamesList::iterator iter;
+    // Declarations
+    tKeyNamesList::iterator iter;
 
-	// Search if the name is already in the map
-	iter = m_strKeys.find(key);
-	if (iter != m_strKeys.end())
-		return iter->second;
+    // Search if the name is already in the map
+    iter = m_strKeys.find(key);
+    if (iter != m_strKeys.end())
+        return iter->second;
 
-	return "";
+    return "";
 }
 
 //-----------------------------------------------------------------------
 
 const string Controller::getNameOfAxis(tAxis axis)
 {
-	// Declarations
-	tAxisNamesList::iterator iter;
+    // Declarations
+    tAxisNamesList::iterator iter;
 
-	// Search if the name is already in the map
-	iter = m_strAxes.find(axis);
-	if (iter != m_strAxes.end()) return iter->second;
+    // Search if the name is already in the map
+    iter = m_strAxes.find(axis);
+    if (iter != m_strAxes.end()) return iter->second;
 
-	return "";
+    return "";
 }
 
 //-----------------------------------------------------------------------
 
 const string Controller::getNameOfPOV(tPOV pov)
 {
-	// Declarations
-	tPOVNamesList::iterator iter;
+    // Declarations
+    tPOVNamesList::iterator iter;
 
-	// Search if the name is already in the map
-	iter = m_strPOVs.find(pov);
-	if (iter != m_strPOVs.end()) return iter->second;
+    // Search if the name is already in the map
+    iter = m_strPOVs.find(pov);
+    if (iter != m_strPOVs.end()) return iter->second;
 
-	return "";
+    return "";
 }
 
 //-----------------------------------------------------------------------
 
 bool Controller::setAxesRange(tAxis axes, int iMinimum, int iMaximum)
 {
-	return false;
+    return false;
 }
 
 //-----------------------------------------------------------------------
 
 bool Controller::setSensibility(float fSensibility)
 {
-	return false;
+    return false;
 }
 
 //-----------------------------------------------------------------------
 
 float Controller::getSensibility()
 {
-	return 0.0f;
+    return 0.0f;
 }
 
 //-----------------------------------------------------------------------
 
 void Controller::registerListener(IEventsListener* pListener)
 {
-	m_listeners.push_back(pListener);
+    m_listeners.push_back(pListener);
 }
 
 //-----------------------------------------------------------------------
 
 void Controller::removeListener(IEventsListener* pListener)
 {
-	// Declarations
-	tListenersList::iterator iter, iterEnd;
+    // Declarations
+    tListenersList::iterator iter, iterEnd;
 
-	for (iter = m_listeners.begin(), iterEnd = m_listeners.end(); iter != iterEnd; ++iter)
-	{
-		if (*iter == pListener)
-		{
-			m_listeners.erase(iter);
-			break;
-		}
-	}
+    for (iter = m_listeners.begin(), iterEnd = m_listeners.end(); iter != iterEnd; ++iter)
+    {
+        if (*iter == pListener)
+        {
+            m_listeners.erase(iter);
+            break;
+        }
+    }
 }

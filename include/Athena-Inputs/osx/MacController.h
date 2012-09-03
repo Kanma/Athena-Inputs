@@ -1,7 +1,7 @@
-/** @file	MacController.h
-	@author	Philip Abbet
- 
-	Declaration of the class 'Athena::Inputs::MacController'
+/** @file   MacController.h
+    @author Philip Abbet
+
+    Declaration of the class 'Athena::Inputs::MacController'
 */
 
 #ifndef _ATHENA_INPUTS_MACCONTROLLER_H_
@@ -19,66 +19,66 @@ namespace Inputs {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	Base class for the Mac controllers
+/// @brief  Base class for the Mac controllers
 //---------------------------------------------------------------------------------------
 class MacController: public Controller
 {
-	//_____ Construction / Destruction __________
+    //_____ Construction / Destruction __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Constructor
+    /// @brief  Constructor
     ///
-    /// @param	hidDevice	HID device
-    /// @param	type		The type of the controller
-    /// @param	uiNo		The no of the controller
+    /// @param  hidDevice   HID device
+    /// @param  type        The type of the controller
+    /// @param  uiNo        The no of the controller
     //-----------------------------------------------------------------------------------
-	MacController(io_object_t hidDevice, tControllerType type, unsigned int uiNo = 1);
+    MacController(io_object_t hidDevice, tControllerType type, unsigned int uiNo = 1);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
+    /// @brief  Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~MacController();
-	
-	
-	//_____ Management of the controller __________
+    virtual ~MacController();
+
+
+    //_____ Management of the controller __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Activate or deactivate the controller
-    /// 
-    /// @param	bActivate	'true' to activate
-    /// @return				'true' if successful
+    /// @brief  Activate or deactivate the controller
+    ///
+    /// @param  bActivate   'true' to activate
+    /// @return             'true' if successful
     //-----------------------------------------------------------------------------------
-	virtual bool activate(bool bActivate = true);
+    virtual bool activate(bool bActivate = true);
 
-	virtual void setExclusiveMode(bool bExclusive);
+    virtual void setExclusiveMode(bool bExclusive);
 
-	virtual const std::string getNameOfKey(tKey key);
-	virtual const std::string getNameOfAxis(tAxis axis);
-	virtual const std::string getNameOfPOV(tPOV pov);
-	
+    virtual const std::string getNameOfKey(tKey key);
+    virtual const std::string getNameOfAxis(tAxis axis);
+    virtual const std::string getNameOfPOV(tPOV pov);
+
 protected:
-	virtual bool acquire(bool bAcquire = true) = 0;
+    virtual bool acquire(bool bAcquire = true) = 0;
 
-	void parseDeviceProperties(CFDictionaryRef properties);
+    void parseDeviceProperties(CFDictionaryRef properties);
 
-	void onPartEnumerated(tControllerPart type, tInputEventPart part,
-						  CFDictionaryRef element);
-	
-	
-	//_____ Internal types __________
+    void onPartEnumerated(tControllerPart type, tInputEventPart part,
+                          CFDictionaryRef element);
+
+
+    //_____ Internal types __________
 protected:
-	struct tCookieInfos
-	{
-		tControllerPart type;
-		tInputEventPart part;
-	};
+    struct tCookieInfos
+    {
+        tControllerPart type;
+        tInputEventPart part;
+    };
 
-	
-	//_____ Attributes __________
+
+    //_____ Attributes __________
 protected:
-	io_object_t									m_hidDevice;
-	bool										m_bExclusiveMode;
-	std::map<IOHIDElementCookie, tCookieInfos>	m_cookies;
+    io_object_t                                 m_hidDevice;
+    bool                                        m_bExclusiveMode;
+    std::map<IOHIDElementCookie, tCookieInfos>  m_cookies;
 };
 
 }

@@ -1,7 +1,7 @@
-/** @file	IVirtualEventsListener.h
-	@author	Philip Abbet
+/** @file   IVirtualEventsListener.h
+    @author Philip Abbet
 
-	Declaration of the interface 'Athena::Inputs::IVirtualEventsListener'
+    Declaration of the interface 'Athena::Inputs::IVirtualEventsListener'
 */
 
 #ifndef _ATHENA_INPUTS_IVIRTUALEVENTSLISTENER_H_
@@ -15,28 +15,28 @@ namespace Athena {
 namespace Inputs {
 
 //---------------------------------------------------------------------------------------
-/// @brief	Represents an event's listener for a virtual controller
+/// @brief  Represents an event's listener for a virtual controller
 //---------------------------------------------------------------------------------------
 class ATHENA_INPUTS_SYMBOL IVirtualEventsListener
 {
-	//_____ Construction / Destruction __________
+    //_____ Construction / Destruction __________
 public:
-	//-----------------------------------------------------------------------------------
-	/// @brief	Destructor
-	//-----------------------------------------------------------------------------------
-	virtual ~IVirtualEventsListener() {};
+    //-----------------------------------------------------------------------------------
+    /// @brief  Destructor
+    //-----------------------------------------------------------------------------------
+    virtual ~IVirtualEventsListener() {};
 
 
-	//_____ Methods to override __________
+    //_____ Methods to override __________
 public:
-	//-----------------------------------------------------------------------------------
-	/// @brief	Called when an event occured on the virtual controller the listener is
-	///			attached to
-	///
-	/// Must be overriden by each listener
-	/// @param	pEvent	The event
-	//-----------------------------------------------------------------------------------
-	virtual void onEvent(tVirtualEvent* pEvent) = 0;
+    //-----------------------------------------------------------------------------------
+    /// @brief  Called when an event occured on the virtual controller the listener is
+    ///         attached to
+    ///
+    /// Must be overriden by each listener
+    /// @param  pEvent  The event
+    //-----------------------------------------------------------------------------------
+    virtual void onEvent(tVirtualEvent* pEvent) = 0;
 };
 
 }
