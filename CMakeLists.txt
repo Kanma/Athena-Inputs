@@ -10,18 +10,6 @@ endif()
 
 
 ##########################################################################################
-# Setup the dependencies
-
-if (NOT DEFINED ATHENA_MATH_STATIC)
-    set(ATHENA_MATH_STATIC ON)
-endif()
-
-if (NOT DEFINED ATHENA_CORE_STATIC)
-    set(ATHENA_CORE_STATIC ON)
-endif()
-
-
-##########################################################################################
 # Library version
 
 set(ATHENA_INPUTS_VERSION_MAJOR 0)
