@@ -2,31 +2,11 @@ cmake_minimum_required(VERSION 2.6)
 project(ATHENA_INPUTS)
 
 ##########################################################################################
-# Settings
-
-if (NOT DEFINED ATHENA_INPUTS_STATIC)
-    set(ATHENA_INPUTS_STATIC OFF CACHE BOOL "Build Athena-Inputs as a static library")
-endif()
-
-
-##########################################################################################
-# Setup the dependencies
-
-if (NOT DEFINED ATHENA_MATH_STATIC)
-    set(ATHENA_MATH_STATIC ON)
-endif()
-
-if (NOT DEFINED ATHENA_CORE_STATIC)
-    set(ATHENA_CORE_STATIC ON)
-endif()
-
-
-##########################################################################################
 # Library version
 
 set(ATHENA_INPUTS_VERSION_MAJOR 0)
 set(ATHENA_INPUTS_VERSION_MINOR 2)
-set(ATHENA_INPUTS_VERSION_PATCH 0)
+set(ATHENA_INPUTS_VERSION_PATCH 1)
 set(ATHENA_INPUTS_VERSION_SUFFIX "")
 
 

@@ -1,8 +1,8 @@
 ********************************************************************************
 *                                                                              *
 *                                Athena-Inputs                                 *
-*                                Version 0.2.0                                 *
-*                    http://github.com/Kanma/Athena-Graphics                   *
+*                                Version 0.2.1                                 *
+*                     http://github.com/Kanma/Athena-Inputs                    *
 *                                                                              *
 ********************************************************************************
 
@@ -16,6 +16,49 @@ of a library written in C++.
 
 This module is used to read user's commands, via the keyboard, mouse and
 gamepads.
+
+
+This module can be used as a standalone library, or combined with the rest of
+the Athena Game Framework (http://github.com/Kanma/Athena-Framework).
+
+NOTE: This version only supports MacOS X!
+
+
+---------------------------------------
+- Dependencies
+---------------------------------------
+
+Athena-Inputs requires the following dependencies:
+
+   - XMake
+   - Athena-Math
+   - Athena-Core
+   - UnitTest++
+
+They are provided as GIT submodules of this repository and will be compiled
+automatically during the compilation of Athena-Inputs.
+
+To download them, do:
+
+    somewhere$ cd <path/to/the/source/of/Athena-Inputs>
+    Athena-Inputs$ git submodule init
+    Athena-Inputs$ git submodule update
+
+
+---------------------------------------
+- Compilation
+---------------------------------------
+
+(Note: you'll need to install CMake to compile Athena-Inputs)
+
+To compile Athena-Inputs (and all its dependencies), do:
+
+    somewhere$ mkdir build
+    somewhere$ cd build
+    build$ cmake <path/to/the/source/of/Athena-Inputs>
+    build$ make
+
+The library will be put in build/bin/
 
 
 ---------------------------------------
