@@ -4,10 +4,10 @@ project(ATHENA_INPUTS)
 ##########################################################################################
 # Library version
 
-set(ATHENA_INPUTS_VERSION_MAJOR 0)
-set(ATHENA_INPUTS_VERSION_MINOR 3)
+set(ATHENA_INPUTS_VERSION_MAJOR 1)
+set(ATHENA_INPUTS_VERSION_MINOR 0)
 set(ATHENA_INPUTS_VERSION_PATCH 0)
-set(ATHENA_INPUTS_VERSION_SUFFIX " (Dev)")
+set(ATHENA_INPUTS_VERSION_SUFFIX "")
 
 
 ##########################################################################################
