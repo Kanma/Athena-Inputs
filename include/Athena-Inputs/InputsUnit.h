@@ -12,6 +12,9 @@
 #include <Athena-Inputs/Controller.h>
 #include <Athena-Inputs/VirtualController.h>
 #include <Athena-Inputs/IEventsListener.h>
+#include <OIS/OISObject.h>
+#include <OIS/OISMouse.h>
+#include <OIS/OISJoyStick.h>
 #include <vector>
 #include <map>
 #include <deque>
@@ -47,7 +50,8 @@ namespace Inputs {
 ///
 /// This class is a singleton.
 //---------------------------------------------------------------------------------------
-class ATHENA_INPUTS_SYMBOL InputsUnit: public Utils::Singleton<InputsUnit>, public IEventsListener
+class ATHENA_INPUTS_SYMBOL InputsUnit: public Utils::Singleton<InputsUnit>,
+                                       public IEventsListener
 {
     //_____ Construction / Destruction __________
 public:
@@ -98,7 +102,7 @@ public:
     /// @param  pListener   The input events will be reported to this listener instead of
     ///                     going through the standard path to the virtual controllers
     //-----------------------------------------------------------------------------------
-    void scan(IEventsListener* pListener);
+    // void scan(IEventsListener* pListener);
 
 
     //_____ Implementation of IEventsListener __________
@@ -137,7 +141,7 @@ public:
     /// @param  uiIndex Index of the controller
     /// @return         The controller, 0 if it doesn't exist
     //-----------------------------------------------------------------------------------
-    Controller* getController(tControllerType type, unsigned int uiIndex = 1);
+    Controller* getController(OIS::Type type, unsigned int uiIndex = 1);
 
     //-----------------------------------------------------------------------------------
     /// @brief  Returns a controller
@@ -270,7 +274,7 @@ public:
 
     //_____ Attributes __________
 private:
-    IControllerManager*                         m_pControllerManager;
+    OIS::InputManager*                          m_pManager;
     std::vector<Controller*>                    m_controllers;          ///< List of the connected controllers
     std::map<std::string, VirtualController*>   m_virtualControllers;   ///< List of the virtual controllers
     std::map<std::string, tVirtualID>           m_virtualIDs;           ///< List of the virtual IDs
