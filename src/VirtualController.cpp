@@ -8,6 +8,7 @@
 #include <Athena-Inputs/VirtualController.h>
 #include <Athena-Inputs/IVirtualEventsListener.h>
 #include <Athena-Inputs/InputsUnit.h>
+#include <Athena-Inputs/Controller.h>
 #include <Athena-Core/Log/LogManager.h>
 #include <Athena-Math/MathUtils.h>
 
@@ -69,7 +70,7 @@ void VirtualController::process(std::deque<tInputEvent> &events)
          iterAxis != iterAxisEnd; ++iterAxis)
     {
         iterAxis->second.bChanged = false;
-        if (iterAxis->second.pController && (iterAxis->second.pController->getType() == CONTROLLER_MOUSE))
+        if (iterAxis->second.pController && (iterAxis->second.pController->getType() == OIS::OISMouse))
             iterAxis->second.iValue = 0;
     }
 
@@ -100,16 +101,16 @@ void VirtualController::process(std::deque<tInputEvent> &events)
                     pVirtualKey->bToggled       = true;
                     pVirtualKey->bPressed       = pEvent->value.bPressed;
                     if (pVirtualKey->bPressed)
-                        pVirtualKey->ulPressTimestamp   = pEvent->dwTimeStamp;
+                        pVirtualKey->ulPressTimestamp   = pEvent->ulTimeStamp;
                     else
-                        pVirtualKey->ulReleaseTimestamp = pEvent->dwTimeStamp;
+                        pVirtualKey->ulReleaseTimestamp = pEvent->ulTimeStamp;
 
                     if (m_pEventsListener)
                     {
                         event.part              = PART_KEY;
                         event.virtualID         = iterKey->first;
                         event.value.bPressed    = pVirtualKey->bPressed;
-                        event.ulTimestamp       = pEvent->dwTimeStamp;
+                        event.ulTimestamp       = pEvent->ulTimeStamp;
 
                         m_pEventsListener->onEvent(&event);
                     }
@@ -280,7 +281,7 @@ void VirtualController::process(std::deque<tInputEvent> &events)
                         }
                     }
                     pVirtualPOV->ulPreviousChangeTimestamp  = pVirtualPOV->ulLastChangeTimestamp;
-                    pVirtualPOV->ulLastChangeTimestamp      = pEvent->dwTimeStamp;
+                    pVirtualPOV->ulLastChangeTimestamp      = pEvent->ulTimeStamp;
                     pVirtualPOV->bChanged                   = true;
 
                     if (m_pEventsListener)
@@ -288,7 +289,7 @@ void VirtualController::process(std::deque<tInputEvent> &events)
                         event.part              = PART_POV;
                         event.virtualID         = iterPOV->first;
                         event.value.position    = pVirtualPOV->position;
-                        event.ulTimestamp       = pEvent->dwTimeStamp;
+                        event.ulTimestamp       = pEvent->ulTimeStamp;
 
                         m_pEventsListener->onEvent(&event);
                     }
@@ -325,14 +326,14 @@ void VirtualController::process(std::deque<tInputEvent> &events)
                         pVirtualAxis->iValue = 0;
                     }
 
-                    pVirtualAxis->ulTimestamp   = pEvent->dwTimeStamp;
+                    pVirtualAxis->ulTimestamp   = pEvent->ulTimeStamp;
 
                     if (m_pEventsListener)
                     {
                         event.part          = PART_AXIS;
                         event.virtualID     = iterAxis->first;
                         event.value.iValue  = pVirtualAxis->iValue;
-                        event.ulTimestamp   = pEvent->dwTimeStamp;
+                        event.ulTimestamp   = pEvent->ulTimeStamp;
 
                         m_pEventsListener->onEvent(&event);
                     }
@@ -354,14 +355,14 @@ void VirtualController::process(std::deque<tInputEvent> &events)
                     pVirtualAxis->bChanged = (MathUtils::Abs(pVirtualAxis->iValue - pEvent->value.iValue) >= 10.0f);
 
                     pVirtualAxis->iValue        = pEvent->value.iValue;
-                    pVirtualAxis->ulTimestamp   = pEvent->dwTimeStamp;
+                    pVirtualAxis->ulTimestamp   = pEvent->ulTimeStamp;
 
                     if (m_pEventsListener)
                     {
                         event.part          = PART_AXIS;
                         event.virtualID     = iterAxis->first;
                         event.value.iValue  = pVirtualAxis->iValue;
-                        event.ulTimestamp   = pEvent->dwTimeStamp;
+                        event.ulTimestamp   = pEvent->ulTimeStamp;
 
                         m_pEventsListener->onEvent(&event);
                     }
@@ -412,7 +413,7 @@ void VirtualController::process(std::deque<tInputEvent> &events)
                     }
 
                     pVirtualPOV->ulPreviousChangeTimestamp  = pVirtualPOV->ulLastChangeTimestamp;
-                    pVirtualPOV->ulLastChangeTimestamp      = pEvent->dwTimeStamp;
+                    pVirtualPOV->ulLastChangeTimestamp      = pEvent->ulTimeStamp;
                     pVirtualPOV->bChanged                   = true;
 
                     if (m_pEventsListener)
@@ -420,7 +421,7 @@ void VirtualController::process(std::deque<tInputEvent> &events)
                         event.part              = PART_POV;
                         event.virtualID         = iterPOV->first;
                         event.value.position    = pVirtualPOV->position;
-                        event.ulTimestamp       = pEvent->dwTimeStamp;
+                        event.ulTimestamp       = pEvent->ulTimeStamp;
 
                         m_pEventsListener->onEvent(&event);
                     }
@@ -443,7 +444,7 @@ void VirtualController::process(std::deque<tInputEvent> &events)
                     pVirtualPOV->previousPosition           = pVirtualPOV->position;
                     pVirtualPOV->position                   = pEvent->value.position;
                     pVirtualPOV->ulPreviousChangeTimestamp  = pVirtualPOV->ulLastChangeTimestamp;
-                    pVirtualPOV->ulLastChangeTimestamp      = pEvent->dwTimeStamp;
+                    pVirtualPOV->ulLastChangeTimestamp      = pEvent->ulTimeStamp;
                     pVirtualPOV->bChanged                   = true;
 
                     if (m_pEventsListener)
@@ -451,7 +452,7 @@ void VirtualController::process(std::deque<tInputEvent> &events)
                         event.part              = PART_POV;
                         event.virtualID         = iterPOV->first;
                         event.value.position    = pVirtualPOV->position;
-                        event.ulTimestamp       = pEvent->dwTimeStamp;
+                        event.ulTimestamp       = pEvent->ulTimeStamp;
 
                         m_pEventsListener->onEvent(&event);
                     }
@@ -505,14 +506,14 @@ void VirtualController::process(std::deque<tInputEvent> &events)
                         }
                     }
 
-                    pVirtualAxis->ulTimestamp   = pEvent->dwTimeStamp;
+                    pVirtualAxis->ulTimestamp   = pEvent->ulTimeStamp;
 
                     if (m_pEventsListener)
                     {
                         event.part          = PART_AXIS;
                         event.virtualID     = iterAxis->first;
                         event.value.iValue  = pVirtualAxis->iValue;
-                        event.ulTimestamp   = pEvent->dwTimeStamp;
+                        event.ulTimestamp   = pEvent->ulTimeStamp;
 
                         m_pEventsListener->onEvent(&event);
                     }
@@ -735,7 +736,7 @@ void VirtualController::addVirtualKey(tVirtualID virtualID, Controller* pControl
 //-----------------------------------------------------------------------
 
 void VirtualController::addVirtualAxis(tVirtualID virtualID, Controller* pController,
-                                        tAxis axis)
+                                       tAxis axis)
 {
     // Declarations
     tVirtualAxis virtualAxis = { 0 };
@@ -752,7 +753,7 @@ void VirtualController::addVirtualAxis(tVirtualID virtualID, Controller* pContro
 //-----------------------------------------------------------------------
 
 void VirtualController::addVirtualAxis(tVirtualID virtualID, Controller* pController,
-                                        tPOV pov, bool bUpDown)
+                                       tPOV pov, bool bUpDown)
 {
     // Declarations
     tVirtualAxis virtualAxis = { 0 };
@@ -770,7 +771,7 @@ void VirtualController::addVirtualAxis(tVirtualID virtualID, Controller* pContro
 //-----------------------------------------------------------------------
 
 void VirtualController::addVirtualAxis(tVirtualID virtualID, Controller* pController,
-                                        tKey keyMin, tKey keyMax)
+                                       tKey keyMin, tKey keyMax)
 {
     // Declarations
     tVirtualAxis virtualAxis = { 0 };
@@ -787,11 +788,12 @@ void VirtualController::addVirtualAxis(tVirtualID virtualID, Controller* pContro
 
 //-----------------------------------------------------------------------
 
-void VirtualController::addVirtualPOV(tVirtualID virtualID, Controller* pController, tPOV pov,
-                                       const std::string& strShortcutUp,
-                                       const std::string& strShortcutDown,
-                                       const std::string& strShortcutLeft,
-                                       const std::string& strShortcutRight)
+void VirtualController::addVirtualPOV(tVirtualID virtualID, Controller* pController,
+                                      tPOV pov,
+                                      const std::string& strShortcutUp,
+                                      const std::string& strShortcutDown,
+                                      const std::string& strShortcutLeft,
+                                      const std::string& strShortcutRight)
 {
     // Assertions
     assert(InputsUnit::getSingletonPtr());

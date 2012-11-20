@@ -5,20 +5,20 @@
 */
 
 #include <Athena-Inputs/InputsUnit.h>
-#include <Athena-Inputs/IControllerManager.h>
+#include <Athena-Inputs/Keyboard.h>
+#include <Athena-Inputs/Mouse.h>
 #include <Athena-Core/Log/LogManager.h>
+#include <Athena-Core/Utils/StringConverter.h>
+#include <OIS/OISInputManager.h>
+#include <OIS/OISKeyboard.h>
+#include <OIS/OISMouse.h>
 // #include <tinyxml.h>
 #include <sstream>
-
-#if ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32
-    #include <Athena-Inputs/win32/DI8ControllerManager.h>
-#elif ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
-    #include <Athena-Inputs/osx/MacControllerManager.h>
-#endif
 
 using namespace Athena;
 using namespace Athena::Inputs;
 using namespace Athena::Log;
+using namespace Athena::Utils;
 using namespace std;
 
 
@@ -37,18 +37,9 @@ template<> InputsUnit* Utils::Singleton<InputsUnit>::ms_Singleton = 0;
 /****************************** CONSTRUCTION / DESTRUCTION *****************************/
 
 InputsUnit::InputsUnit()
-: m_pControllerManager(0), m_uiNbGamepads(0)
+: m_pManager(0), m_uiNbGamepads(0)
 {
     ATHENA_LOG_EVENT("Creation");
-
-#if ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32
-    m_pControllerManager = new DI8ControllerManager();
-#elif ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
-    m_pControllerManager = new MacControllerManager();
-#else
-    #warning Athena-Inputs is not yet supported on this platform, no controller will be available
-    ATHENA_LOG_WARNING("Athena-Inputs isn't yet supported on this platform, no controller will be available");
-#endif
 }
 
 //-----------------------------------------------------------------------
@@ -80,7 +71,7 @@ InputsUnit::~InputsUnit()
     m_shortcuts.clear();
 
     // Destroy the controller manager
-    delete m_pControllerManager;
+    OIS::InputManager::destroyInputSystem(m_pManager);
 }
 
 //-----------------------------------------------------------------------
@@ -105,10 +96,23 @@ bool InputsUnit::init(void* mainWindowHandle)
 {
     ATHENA_LOG_EVENT("Initialization");
 
-    if (!m_pControllerManager || !m_pControllerManager->init(mainWindowHandle))
+    m_pManager = OIS::InputManager::createInputSystem((size_t) mainWindowHandle);
+    if (!m_pManager)
     {
         ATHENA_LOG_ERROR("Failed to initialize");
         return false;
+    }
+
+    OIS::Mouse* pMouse = static_cast<OIS::Mouse*>(m_pManager->createInputObject(OIS::OISMouse, true));
+    OIS::Keyboard* pKeyboard = static_cast<OIS::Keyboard*>(m_pManager->createInputObject(OIS::OISKeyboard, true));
+
+    _addController(new Keyboard(pKeyboard));
+    _addController(new Mouse(pMouse));
+
+    for (int i = 0; i < m_pManager->getNumberOfDevices(OIS::OISJoyStick); ++i)
+    {
+        OIS::JoyStick* pJoyStick = static_cast<OIS::JoyStick*>(m_pManager->createInputObject(OIS::OISJoyStick, true));
+        // _addController(pJoyStick);
     }
 
     return true;
@@ -119,20 +123,18 @@ bool InputsUnit::init(void* mainWindowHandle)
 void InputsUnit::process()
 {
     // Declarations
-    vector<Controller*>::iterator               iter, iterEnd;
-    map<string, VirtualController*>::iterator   iter2, iterEnd2;
-    Controller*                                 pController;
+    vector<Controller*>::iterator             iter, iterEnd;
+    map<string, VirtualController*>::iterator iter2, iterEnd2;
 
     // Read the inputs of all the active controllers
     for (iter = m_controllers.begin(), iterEnd = m_controllers.end(); iter != iterEnd; ++iter)
     {
-        pController = *iter;
-        if (pController->isActive())
-            pController->readInputs();
+        (*iter)->capture();
     }
 
     // Update the virtual controllers
-    for (iter2 = m_virtualControllers.begin(), iterEnd2 = m_virtualControllers.end(); iter2 != iterEnd2; ++iter2)
+    for (iter2 = m_virtualControllers.begin(), iterEnd2 = m_virtualControllers.end();
+         iter2 != iterEnd2; ++iter2)
     {
         iter2->second->process(m_events);
     }
@@ -142,24 +144,24 @@ void InputsUnit::process()
 
 //-----------------------------------------------------------------------
 
-void InputsUnit::scan(IEventsListener* pListener)
-{
-    // Declarations
-    vector<Controller*>::iterator   iter, iterEnd;
-    Controller*                     pController;
-
-    // Read the inputs of all the controllers
-    for (iter = m_controllers.begin(), iterEnd = m_controllers.end(); iter != iterEnd; ++iter)
-    {
-        pController = *iter;
-
-        pController->removeListener(this);
-        pController->registerListener(pListener);
-        pController->readInputs();
-        pController->removeListener(pListener);
-        pController->registerListener(this);
-    }
-}
+// void InputsUnit::scan(IEventsListener* pListener)
+// {
+//     // Declarations
+//     vector<OIS::Object*>::iterator   iter, iterEnd;
+//     OIS::Object*                     pController;
+//
+//     // Read the inputs of all the controllers
+//     for (iter = m_controllers.begin(), iterEnd = m_controllers.end(); iter != iterEnd; ++iter)
+//     {
+//         pController = *iter;
+//
+//         pController->removeListener(this);
+//         pController->registerListener(pListener);
+//         pController->readInputs();
+//         pController->removeListener(pListener);
+//         pController->registerListener(this);
+//     }
+// }
 
 
 /**************************** IMPLEMENTATION OF IEVENTSLISTENER ************************/
@@ -171,20 +173,26 @@ void InputsUnit::onEvent(tInputEvent* pEvent)
 }
 
 
-/****************************** MANAGEMENT OF THE CONTROLLERS **************************/
+/****************************** MANAGEMENT OF THE CONTROLLERS ***************************/
 
-Controller* InputsUnit::getController(tControllerType type, unsigned int uiIndex)
+Controller* InputsUnit::getController(OIS::Type type, unsigned int uiIndex)
 {
     // Declarations
-    vector<Controller*>::iterator   iter, iterEnd;
-    Controller*                     pController;
+    vector<Controller*>::iterator iter, iterEnd;
+    Controller*                   pController;
+    unsigned int                  index = 1;
 
     // Search the controller
     for (iter = m_controllers.begin(), iterEnd = m_controllers.end(); iter != iterEnd; ++iter)
     {
         pController = *iter;
-        if ((pController->getType() == type) && (pController->getIndex() == uiIndex))
-            return pController;
+        if (pController->getType() == type)
+        {
+            if (index == uiIndex)
+                return pController;
+
+            ++index;
+        }
     }
 
     return 0;
@@ -204,10 +212,10 @@ Controller* InputsUnit::getController(unsigned int uiIndex)
 
 void InputsUnit::_addController(Controller* pController)
 {
-    if (pController->getType() == CONTROLLER_GAMEPAD)
-        ++m_uiNbGamepads;
-
     ATHENA_LOG_EVENT("Adding the controller '" + pController->getName() + "'");
+
+    if (pController->getType() == OIS::OISJoyStick)
+        ++m_uiNbGamepads;
 
     m_controllers.push_back(pController);
 
@@ -221,7 +229,7 @@ void InputsUnit::_removeController(Controller* pController)
     // Declarations
     std::vector<Controller*>::iterator iter, iterEnd;
 
-    if (pController->getType() == CONTROLLER_GAMEPAD)
+    if (pController->getType() == OIS::OISJoyStick)
         --m_uiNbGamepads;
 
     // Search the controller

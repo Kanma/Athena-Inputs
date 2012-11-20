@@ -1,7 +1,7 @@
 ********************************************************************************
 *                                                                              *
 *                                Athena-Inputs                                 *
-*                                Version 0.2.1                                 *
+*                                Version 1.0.0                                 *
 *                     http://github.com/Kanma/Athena-Inputs                    *
 *                                                                              *
 ********************************************************************************
@@ -21,8 +21,6 @@ gamepads.
 This module can be used as a standalone library, or combined with the rest of
 the Athena Game Framework (http://github.com/Kanma/Athena-Framework).
 
-NOTE: This version only supports MacOS X!
-
 
 ---------------------------------------
 - Dependencies
@@ -34,6 +32,7 @@ Athena-Inputs requires the following dependencies:
    - Athena-Math
    - Athena-Core
    - UnitTest++
+   - OIS
 
 They are provided as GIT submodules of this repository and will be compiled
 automatically during the compilation of Athena-Inputs.

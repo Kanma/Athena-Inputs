@@ -8,6 +8,7 @@
 #define _ATHENA_INPUTS_DECLARATIONS_H_
 
 #include <Athena-Inputs/Prerequisites.h>
+#include <OIS/OISPrereqs.h>
 #include <string>
 
 
@@ -16,18 +17,6 @@ namespace Inputs {
 
 
 /************************************** TYPES ******************************************/
-
-//---------------------------------------------------------------------------------------
-/// @brief  Enumerates the types of controllers
-//---------------------------------------------------------------------------------------
-enum tControllerType
-{
-    CONTROLLER_NULL         = 0,        ///< Invalid peripheral
-    CONTROLLER_KEYBOARD     = 1,        ///< Keyboard
-    CONTROLLER_MOUSE        = 2,        ///< Mouse
-    CONTROLLER_GAMEPAD      = 4,        ///< Gamepad
-};
-
 
 typedef unsigned int tVirtualID;        ///< Represents a part of a virtual controller
 typedef unsigned char tKey;             ///< Represents a key
@@ -72,8 +61,7 @@ struct tInputEvent
     tControllerPart     part;               ///< Part on the controller
     tInputEventPart     partID;
     tInputEventValue    value;
-    unsigned long       dwTimeStamp;        ///< Timestamp of the event
-    unsigned long       dwSequence;         ///< Sequence number (used to sort the events)
+    unsigned long       ulTimeStamp;        ///< Timestamp of the event
 };
 
 
@@ -213,18 +201,14 @@ struct tVirtualPOV
 };
 
 
-/// Maximum size of event buffer that can be used by a controller
-const unsigned int MAX_BUFFER_SIZE = 16;
-
-
 /************************************** CONSTANTS **************************************/
 
 // Possible positions for a point-of-view
 const tPOVPosition POV_CENTER       = 0;                    ///< Center position of a POV
 const tPOVPosition POV_UP           = 1;                    ///< Up position of a POV
 const tPOVPosition POV_DOWN         = 2;                    ///< Down position of a POV
-const tPOVPosition POV_LEFT         = 4;                    ///< Left position of a POV
-const tPOVPosition POV_RIGHT        = 8;                    ///< Right position of a POV
+const tPOVPosition POV_RIGHT        = 4;                    ///< Right position of a POV
+const tPOVPosition POV_LEFT         = 8;                    ///< Left position of a POV
 const tPOVPosition POV_UPLEFT       = POV_UP | POV_LEFT;    ///< Up/Left position of a POV
 const tPOVPosition POV_UPRIGHT      = POV_UP | POV_RIGHT;   ///< Up/Right position of a POV
 const tPOVPosition POV_DOWNLEFT     = POV_DOWN | POV_LEFT;  ///< Down/Left position of a POV

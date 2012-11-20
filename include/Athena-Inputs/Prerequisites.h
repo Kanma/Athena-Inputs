@@ -35,22 +35,14 @@ namespace Athena
     namespace Inputs
     {
         class Controller;
+        class Gamepad;
         class InputsUnit;
+        class Keyboard;
+        class Mouse;
         class VirtualController;
 
-        class IControllerManager;
         class IEventsListener;
         class IVirtualEventsListener;
-
-#if ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32
-
-#elif ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
-        class MacController;
-        class MacControllerManager;
-        class MacGamepad;
-        class MacKeyboard;
-        class MacMouse;
-#endif
     }
 }
 
