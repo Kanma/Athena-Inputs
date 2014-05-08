@@ -31,7 +31,11 @@ static const char* __CONTEXT__ = "Inputs unit";
 /********************************** STATIC ATTRIBUTES **********************************/
 
 // The instance of the singleton
-template<> InputsUnit* Utils::Singleton<InputsUnit>::ms_Singleton = 0;
+namespace Athena {
+    namespace Utils {
+        template<> InputsUnit* Utils::Singleton<InputsUnit>::ms_Singleton = 0;
+    }
+}
 
 
 /****************************** CONSTRUCTION / DESTRUCTION *****************************/

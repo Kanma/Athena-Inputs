@@ -95,9 +95,8 @@ public:
     /// @brief  Activate/Deactivate the controller
     ///
     /// @param  bActivate   Indicates if the controller must be activated
-    /// @return             'true' if successful
     //-----------------------------------------------------------------------------------
-    inline bool activate(bool bActivate = true) { m_pOISObject->setBuffered(bActivate); }
+    inline void activate(bool bActivate = true) { m_pOISObject->setBuffered(bActivate); }
 
     //-----------------------------------------------------------------------------------
     /// @brief  Read the inputs of the controller
