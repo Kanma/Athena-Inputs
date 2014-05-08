@@ -1,7 +1,7 @@
 ********************************************************************************
 *                                                                              *
 *                                Athena-Inputs                                 *
-*                                Version 1.0.0                                 *
+*                                Version 1.0.1                                 *
 *                     http://github.com/Kanma/Athena-Inputs                    *
 *                                                                              *
 ********************************************************************************
@@ -32,6 +32,7 @@ Athena-Inputs requires the following dependencies:
    - Athena-Math
    - Athena-Core
    - UnitTest++
+   - rapidjson
    - OIS
 
 They are provided as GIT submodules of this repository and will be compiled
