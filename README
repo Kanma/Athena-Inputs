@@ -32,6 +32,7 @@ Athena-Inputs requires the following dependencies:
    - Athena-Math
    - Athena-Core
    - UnitTest++
+   - rapidjson
    - OIS
 
 They are provided as GIT submodules of this repository and will be compiled
